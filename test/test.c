@@ -27,7 +27,7 @@ main(int argc, const char **argv)
 
       if (inbuf != NULL && outbuf != NULL)
         {
-          (void) fread(inbuf, sizeof(char), insize, fh);
+          long inlen = fread(inbuf, sizeof(char), insize, fh);
           fclose(fh);
           fh = NULL;
 
