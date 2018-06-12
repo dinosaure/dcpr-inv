@@ -1,6 +1,6 @@
 #include <caml/callback.h>
 
-__attribute__ ((__constructor___))
+__attribute__ ((__constructor__))
 void
 init(void)
 {

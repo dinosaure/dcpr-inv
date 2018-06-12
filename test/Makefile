@@ -14,6 +14,6 @@ $(BUILDDIR)/test.native: $(BUILDDIR)/test.o
 	$(LD) -o $@ $< -L$(BUILDDIR)/.. -ldecompress
 
 $(BUILDDIR)/test.o: test.c
-	$(CC) -c -o $@ -I $(OCAMLDIR) -I $(BUILDDIR)/../generated  $<
+	$(CC) -g -c -o $@ -I $(OCAMLDIR) -I $(BUILDDIR)/../generated  $<
 
 .PHONY: all clean

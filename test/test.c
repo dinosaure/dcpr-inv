@@ -6,6 +6,8 @@
 
 #include "decompress.h"
 
+int max(int a, int b) { return (a < b) ? b : a; }
+
 int
 main(int argc, const char **argv)
 {
@@ -17,7 +19,7 @@ main(int argc, const char **argv)
     {
       fseek(fh, 0L, SEEK_END);
       long insize = ftell(fh);
-      long outsize = (strcmp(argv[1], "-i") == 0) ? atoi(argv[2]) : insize;
+      long outsize = (strcmp(argv[1], "-i") == 0) ? atoi(argv[2]) : insize * 2;
       rewind(fh);
 
       inbuf = malloc(insize);
@@ -25,21 +27,19 @@ main(int argc, const char **argv)
 
       if (inbuf != NULL && outbuf != NULL)
         {
-          (void) fread(inbuf, insize, 1, fh);
+          (void) fread(inbuf, sizeof(char), insize, fh);
           fclose(fh);
           fh = NULL;
 
           long outlen = 0;
-
-          printf("Start to call OCaml function.\n");
 
           if (strcmp(argv[1], "-i") == 0)
             outlen = inflate(inbuf, insize, outbuf, outsize, 4, 0, NULL);
           else
             outlen = deflate(inbuf, insize, outbuf, outsize, 4, 0, NULL);
 
-          for (int i = 0; i < outlen; ++i, ++outbuf)
-            printf("%c", *outbuf);
+          for (int i = 0; i < outlen; ++i)
+            printf("%c", outbuf[i]);
 
           free(inbuf);
           free(outbuf);

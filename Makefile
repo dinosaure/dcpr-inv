@@ -60,7 +60,7 @@ $(GENERATED): $(GENERATOR)
 	$(GENERATOR) $(BUILDDIR)/generated
 
 $(BUILDDIR)/%.o: %.c
-	$(CC) -c -o $@ -fPIC -I $(shell ocamlfind query ctypes) -I $(OCAMLDIR) -I $(OCAMLDIR)/../ctypes $<
+	$(CC) -g -c -o $@ -fPIC -I $(shell ocamlfind query ctypes) -I $(OCAMLDIR) -I $(OCAMLDIR)/../ctypes $<
 
 $(BUILDDIR)/%.cmx: %.ml
 	ocamlfind opt -c -o $@ -I $(BUILDDIR)/generated -I $(BUILDDIR)/lib -package $(PACKAGES) $<
@@ -74,9 +74,9 @@ clean:
 test: all
 	$(MAKE) -C $@
 ifeq ($(OSTYPE),Win32)
-	PATH="$(BUILDDIR):$(PATH)" _build/test/test.native test/file
+	PATH="$(BUILDDIR):$(PATH)" _build/test/test.native test/file > test/file.z
 else
-	LD_LIBRARY_PATH=$(BUILDDIR) _build/test/test.native test/file
+	LD_LIBRARY_PATH=$(BUILDDIR) _build/test/test.native test/file > test/file.z
 endif
 
 .PHONY: test
