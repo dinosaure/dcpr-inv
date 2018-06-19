@@ -13,13 +13,13 @@ main(int argc, const char **argv)
 {
   char *inbuf;
   char *outbuf;
-  FILE *fh = (strcmp(argv[1], "-i") == 0) ? fopen(argv[3], "rb") : fopen(argv[1], "rb");
+  FILE *fh = (strcmp(argv[1], "-i") == 0) ? fopen(argv[2], "rb") : fopen(argv[1], "rb");
 
   if (fh != NULL)
     {
       fseek(fh, 0L, SEEK_END);
       long insize = ftell(fh);
-      long outsize = (strcmp(argv[1], "-i") == 0) ? atoi(argv[2]) : insize * 2;
+      long outsize = insize * 2;
       rewind(fh);
 
       inbuf = malloc(insize);

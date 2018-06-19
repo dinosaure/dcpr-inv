@@ -76,7 +76,9 @@ test: all
 ifeq ($(OSTYPE),Win32)
 	PATH="$(BUILDDIR):$(PATH)" _build/test/test.native test/file > test/file.z
 else
-	LD_LIBRARY_PATH=$(BUILDDIR) _build/test/test.native test/file > test/file.z
+	LD_LIBRARY_PATH=$(BUILDDIR) _build/test/test.native test/file > test/file.z && \
+	LD_LIBRARY_PATH=$(BUILDDIR) _build/test/test.native -i test/file.z > test/file.o && \
+  diff test/file.o test/file
 endif
 
 .PHONY: test

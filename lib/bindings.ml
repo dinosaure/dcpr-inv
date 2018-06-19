@@ -3,10 +3,10 @@ open Foreign
 open Decompress
 
 let inflate inbuf insize outbuf outsize _level _log _window =
-  let open Zlib_inflate in
-
   let inbuf = bigarray_of_ptr array1 insize Bigarray.char inbuf in
   let outbuf = bigarray_of_ptr array1 outsize Bigarray.char outbuf in
+
+  let open Zlib_inflate in
 
   let state  = default (Window.create ~proof:B.proof_bigstring) in
   let inpos  = ref 0 in
