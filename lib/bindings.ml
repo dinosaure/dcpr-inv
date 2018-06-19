@@ -2,7 +2,7 @@ open Ctypes
 open Foreign
 open Decompress
 
-let inflate inbuf insize outbuf outsize _level _log _window =
+let inflate inbuf insize outbuf outsize =
   let inbuf = bigarray_of_ptr array1 insize Bigarray.char inbuf in
   let outbuf = bigarray_of_ptr array1 outsize Bigarray.char outbuf in
 
@@ -29,7 +29,7 @@ let inflate inbuf insize outbuf outsize _level _log _window =
              | Ok v -> v
              | Error _ -> invalid_arg "Decompress.inflate"
 
-let deflate inbuf insize outbuf outsize level _log _window =
+let deflate inbuf insize outbuf outsize level =
   let inbuf = bigarray_of_ptr array1 insize Bigarray.char inbuf in
   let outbuf = bigarray_of_ptr array1 outsize Bigarray.char outbuf in
 
@@ -66,6 +66,6 @@ let deflate inbuf insize outbuf outsize level _log _window =
 
 module Stubs (I: Cstubs_inverted.INTERNAL) =
 struct
-  let () = I.internal "inflate" (ptr char @-> int @-> ptr char @-> int @-> int @-> bool @-> ptr void @-> returning int) inflate
-  let () = I.internal "deflate" (ptr char @-> int @-> ptr char @-> int @-> int @-> bool @-> ptr void @-> returning int) deflate
+  let () = I.internal "decompress_inflate" (ptr char @-> int @-> ptr char @-> int @-> returning int) inflate
+  let () = I.internal "decompress_deflate" (ptr char @-> int @-> ptr char @-> int @-> int @-> returning int) deflate
 end
