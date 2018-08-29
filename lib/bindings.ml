@@ -62,6 +62,6 @@ let deflate inbuf insize outbuf outsize level _log _window =
 
 module Stubs (I: Cstubs_inverted.INTERNAL) =
 struct
-  let () = I.internal "inflate" (ptr char @-> int @-> ptr char @-> int @-> int @-> bool @-> ptr void @-> returning int) inflate
-  let () = I.internal "deflate" (ptr char @-> int @-> ptr char @-> int @-> int @-> bool @-> ptr void @-> returning int) deflate
+  let () = I.internal "decompress_inflate" (ptr char @-> int @-> ptr char @-> int @-> int @-> bool @-> ptr void @-> returning int) inflate
+  let () = I.internal "decompress_deflate" (ptr char @-> int @-> ptr char @-> int @-> int @-> bool @-> ptr void @-> returning int) deflate
 end
