@@ -4,7 +4,7 @@
 
 #include <caml/callback.h>
 
-#include "decompress.h"
+#include "dcpr.h"
 
 int max(int a, int b) { return (a < b) ? b : a; }
 
@@ -34,9 +34,9 @@ main(int argc, const char **argv)
           long outlen = 0;
 
           if (strcmp(argv[1], "-i") == 0)
-            outlen = decompress_inflate(inbuf, insize, outbuf, outsize);
+            outlen = dcpr_inflate(inbuf, insize, outbuf, outsize);
           else
-            outlen = decompress_deflate(inbuf, insize, outbuf, outsize, 4);
+            outlen = dcpr_deflate(inbuf, insize, outbuf, outsize, 4);
 
           for (int i = 0; i < outlen; ++i)
             printf("%c", outbuf[i]);

@@ -66,6 +66,6 @@ let deflate inbuf insize outbuf outsize level =
 
 module Stubs (I: Cstubs_inverted.INTERNAL) =
 struct
-  let () = I.internal "decompress_inflate" (ptr char @-> int @-> ptr char @-> int @-> returning int) inflate
-  let () = I.internal "decompress_deflate" (ptr char @-> int @-> ptr char @-> int @-> int @-> returning int) deflate
+  let () = I.internal "dcpr_inflate" (ptr char @-> int @-> ptr char @-> int @-> returning int) inflate
+  let () = I.internal "dcpr_deflate" (ptr char @-> int @-> ptr char @-> int @-> int @-> returning int) deflate
 end
