@@ -1,1 +1,1 @@
-include Bindings.Stubs(Decompress_bindings)
+include Bindings.Stubs(Dcpr_bindings)

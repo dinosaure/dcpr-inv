@@ -10,16 +10,16 @@ GENERATOR_FILES=$(BUILDDIR)/lib/bindings.cmx		\
 
 # The files from which we'll build a shared library.
 LIBFILES=$(BUILDDIR)/lib/bindings.cmx			\
-         $(BUILDDIR)/generated/decompress_bindings.cmx	\
+         $(BUILDDIR)/generated/dcpr_bindings.cmx	\
          $(BUILDDIR)/lib/apply_bindings.cmx		\
-         $(BUILDDIR)/generated/decompress.o
+         $(BUILDDIR)/generated/dcpr.o
 
 CAML_INIT=$(BUILDDIR)/stub/init.o
 
 # The files that we'll generate
-GENERATED=$(BUILDDIR)/generated/decompress.h \
-          $(BUILDDIR)/generated/decompress.c \
-          $(BUILDDIR)/generated/decompress_bindings.ml
+GENERATED=$(BUILDDIR)/generated/dcpr.h \
+          $(BUILDDIR)/generated/dcpr.c \
+          $(BUILDDIR)/generated/dcpr_bindings.ml
 
 OSTYPE:=$(shell ocamlfind ocamlc -config | awk '/^os_type:/ {print $$2}')
 SYSTEM:=$(shell ocamlfind ocamlc -config | awk '/^system:/ {print $$2}')
@@ -36,17 +36,17 @@ GENERATOR=$(BUILDDIR)/generate$(EXTEXE)
 
 all: sharedlib
 
-sharedlib: $(BUILDDIR)/libdecompress$(EXTDLL)
+sharedlib: $(BUILDDIR)/libdcpr$(EXTDLL)
 
 
 ifeq ($(OSTYPE),$(filter $(OSTYPE),Win32 Cygwin))
-$(BUILDDIR)/libdecompress$(EXTDLL): $(CAML_INIT) $(LIBFILES)
+$(BUILDDIR)/libdcpr$(EXTDLL): $(CAML_INIT) $(LIBFILES)
 	ocamlfind opt -o $@ -linkpkg -output-obj -verbose -package $(PACKAGES) $^
 else ifeq ($(SYSTEM),$(filter $(SYSTEM),macosx))
-$(BUILDDIR)/libdecompress$(EXTDLL): $(CAML_INIT) $(LIBFILES)
+$(BUILDDIR)/libdcpr$(EXTDLL): $(CAML_INIT) $(LIBFILES)
 	ocamlfind opt -o $@ -linkpkg -runtime-variant _pic -verbose -ccopt -dynamiclib -package $(PACKAGES) $^
 else
-$(BUILDDIR)/libdecompress$(EXTDLL): $(CAML_INIT) $(LIBFILES)
+$(BUILDDIR)/libdcpr$(EXTDLL): $(CAML_INIT) $(LIBFILES)
 	ocamlfind opt -o $@ -linkpkg -output-obj -runtime-variant _pic -verbose -package $(PACKAGES) $^
 endif
 
