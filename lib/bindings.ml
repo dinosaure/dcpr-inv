@@ -8,11 +8,9 @@ let inflate inbuf insize outbuf outsize _level _log _window =
 
   let open Zlib_inflate in
 
-  let state  = default (Window.create ~proof:B.proof_bigstring) in
+  let state  = default ~witness:B.bigstring (Window.create ~witness:B.bigstring) in
   let inpos  = ref 0 in
   let outpos = ref 0 in
-  let inbuf  = B.from_bigstring inbuf in
-  let outbuf = B.from_bigstring outbuf in
 
   let rec go state = match eval inbuf outbuf state with
     | `Await state ->
@@ -35,11 +33,9 @@ let deflate inbuf insize outbuf outsize level _log _window =
 
   let open Zlib_deflate in
 
-  let state  = default ~proof:B.proof_bigstring level in
+  let state  = default ~witness:B.bigstring level in
   let inpos  = ref 0 in
   let outpos = ref 0 in
-  let inbuf  = B.from_bigstring inbuf in
-  let outbuf = B.from_bigstring outbuf in
 
   let rec go state =
     match eval inbuf outbuf state with
