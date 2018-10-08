@@ -2,7 +2,7 @@ open Ctypes
 open Foreign
 open Decompress
 
-let inflate inbuf insize outbuf outsize _level _log _window =
+let inflate inbuf insize outbuf outsize =
   let inbuf = bigarray_of_ptr array1 insize Bigarray.char inbuf in
   let outbuf = bigarray_of_ptr array1 outsize Bigarray.char outbuf in
   let window = Window.create ~crc:Window.adler32 ~witness:B.bigstring in
@@ -26,7 +26,7 @@ let inflate inbuf insize outbuf outsize _level _log _window =
   go state
   |> function Ok v -> v | Error _ -> invalid_arg "Decompress.inflate"
 
-let deflate inbuf insize outbuf outsize level _log _window =
+let deflate inbuf insize outbuf outsize level =
   let inbuf = bigarray_of_ptr array1 insize Bigarray.char inbuf in
   let outbuf = bigarray_of_ptr array1 outsize Bigarray.char outbuf in
   let open Zlib_deflate in
@@ -54,13 +54,11 @@ let deflate inbuf insize outbuf outsize level _log _window =
 module Stubs (I : Cstubs_inverted.INTERNAL) = struct
   let () =
     I.internal "dcpr_inflate"
-      ( ptr char @-> int @-> ptr char @-> int @-> int @-> int @-> ptr void
-      @-> returning int )
+      (ptr char @-> int @-> ptr char @-> int @-> returning int)
       inflate
 
   let () =
     I.internal "dcpr_deflate"
-      ( ptr char @-> int @-> ptr char @-> int @-> int @-> int @-> ptr void
-      @-> returning int )
+      (ptr char @-> int @-> ptr char @-> int @-> int @-> returning int)
       deflate
 end

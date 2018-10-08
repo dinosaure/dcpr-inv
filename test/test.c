@@ -34,9 +34,9 @@ main(int argc, const char **argv)
           long outlen = 0;
 
           if (strcmp(argv[1], "-i") == 0)
-            outlen = dcpr_inflate(inbuf, insize, outbuf, outsize, 4, 0, NULL);
+            outlen = dcpr_inflate(inbuf, insize, outbuf, outsize);
           else
-            outlen = dcpr_deflate(inbuf, insize, outbuf, outsize, 4, 0, NULL);
+            outlen = dcpr_deflate(inbuf, insize, outbuf, outsize, 4);
 
           for (int i = 0; i < outlen; ++i)
             printf("%c", outbuf[i]);
